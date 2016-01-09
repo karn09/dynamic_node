@@ -31,6 +31,7 @@ function Profile(username) {
 				}
 			}
 		}).on("error", function(error) {
+			console.log('error: ' + error)
 			profileEmitter.emit("error", error);
 		})
 	})

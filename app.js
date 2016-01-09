@@ -9,7 +9,7 @@ const hostname = '127.0.0.1';
 const port = 1337;
 
 http.createServer((request, response) => {
-	//router.style(request, response);
+	router.style(request, response);
 	router.home(request, response);
 	router.user(request, response);
 }).listen(port, hostname, () => {

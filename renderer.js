@@ -20,16 +20,16 @@ function view(templateName, values, response) {
 	// insert values into content
 	fileContents = mergeValues(values, fileContents);
 	// write out to the response
-	response.write(fileContents)
+	response.write(fileContents);
 }
 
-function style(sheet, response) {
+
+function css(sheet, response) {
 	var cssContent = fs.readFileSync("./views/" + sheet + ".css", {
 		encoding: "utf8"
 	})
-	//response.writeHead(200, {'Content-Type': 'text/css'});
 	response.write(cssContent);
 }
 
 module.exports.view = view;
-module.exports.style = style;
+module.exports.css = css;

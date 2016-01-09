@@ -8,12 +8,14 @@ var commonHeaders = {
 };
 
 function style(request, response) {
-	response.writeHead(200, {
-		'Content-Type': 'text/css'
-	});
-	renderer.style("main", response);
-	response.end();
+	if (request.url.indexOf('.css') != -1) {
+		response.writeHead(200, {
+			'Content-Type': 'text/css'
+		});
+		renderer.css("main", response);
+	}
 }
+
 
 function home(request, response) {
 	//  if url == '/' && GET
@@ -21,17 +23,16 @@ function home(request, response) {
 		if (request.method.toLowerCase() === "get") {
 
 			// show search
-			//response.writeHead(200, {'Content-Type': 'text/css'});
-			//			renderer.style("main", response);
 
 			response.writeHead(200, commonHeaders);
 			renderer.view("header", {}, response);
 			renderer.view("search", {}, response);
 			renderer.view("footer", {}, response);
 			response.end();
-		} else {
-			//  if url == '/' && POST
-			// get post data from body
+		} else if (request.method.toLowerCase() === 'post') {
+			console.log('test')
+				//  if url == '/' && POST
+				// get post data from body
 			request.on("data", function(postBody) {
 				// extract the username
 				var query = querystring.parse(postBody.toString());
@@ -52,7 +53,7 @@ function user(request, response) {
 
 		// response.writeHead(200, commonHeaders);
 		// renderer.style("main", response);
-		renderer.view("header", {}, response);
+		//renderer.view("header", {}, response);
 		//    get json from treehouse
 		var studentProfile = new Profile(username);
 
@@ -68,6 +69,7 @@ function user(request, response) {
 				javascriptPoints: profileJSON.points.JavaScript
 			};
 			// simple response
+			renderer.view("header", {}, response);
 			renderer.view("profile", values, response);
 			//renderer.view("search", {}, response);
 			renderer.view("footer", {}, response);
